@@ -36,12 +36,19 @@ ENV LC_ALL=C.UTF-8 \
     DJANGO_SETTINGS_MODULE=production_settings
 
 # To copy only the requirements files needed to install from PIP
+COPY src/requirements /pretalx/src/requirements
+COPY src/requirements.txt /pretalx/src
 RUN pip3 install -U \
         pip \
         setuptools \
         wheel && \
     cd /pretalx/src && \
-    pip3 install pip setuptools wheel pretalx redis gunicorn && \
+    pip3 install \
+        -r requirements.txt \
+        -r requirements/memcached.txt \
+        -r requirements/mysql.txt \
+        -r requirements/redis.txt \
+        gunicorn && \
     rm -rf ~/.cache/pip
 
 COPY deployment/docker/pretalx.bash /usr/local/bin/pretalx

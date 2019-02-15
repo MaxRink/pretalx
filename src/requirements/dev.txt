@@ -1,0 +1,19 @@
+django-debug-toolbar==1.9.1
+sqlparse==0.2.1  # pinned due to difficulties with django-debug-toolbar
+# Testing requirements
+pycodestyle==2.5.*
+pyflakes==2.1.*
+pep8-naming
+flake8==3.7.*
+codecov
+coverage
+pytest==3.6.*
+pytest-django
+pytest-xdist
+isort
+pytest-rerunfailures==4.*
+pytest-mock==1.6.*
+pytest-cache
+pytest-sugar
+responses
+potypo
