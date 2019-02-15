@@ -4,6 +4,7 @@ RUN apt-get update && \
     apt-get install -y git gettext libmariadbclient-dev libpq-dev locales libmemcached-dev build-essential \
             nginx \
             supervisor \
+            sudo \
             --no-install-recommends && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
