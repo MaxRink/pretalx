@@ -4,6 +4,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
             build-essential \
             default-libmysqlclient-dev \
+            libmysqlclient-dev \
             gettext \
             git \
             libffi-dev \
@@ -34,10 +35,8 @@ RUN apt-get update && \
 
 ENV LC_ALL=C.UTF-8 \
     DJANGO_SETTINGS_MODULE=production_settings
+COPY src /pretalx/src
 
-# To copy only the requirements files needed to install from PIP
-COPY src/requirements /pretalx/src/requirements
-COPY src/requirements.txt /pretalx/src
 RUN pip3 install -U \
         pip \
         setuptools \
@@ -54,7 +53,6 @@ RUN pip3 install -U \
 COPY deployment/docker/pretalx.bash /usr/local/bin/pretalx
 COPY deployment/docker/supervisord.conf /etc/supervisord.conf
 COPY deployment/docker/nginx.conf /etc/nginx/nginx.conf
-COPY deployment/docker/production_settings.py /pretalx/src/production_settings.py
 COPY src /pretalx/src
 
 RUN chmod +x /usr/local/bin/pretalx && \
@@ -64,10 +62,13 @@ RUN chmod +x /usr/local/bin/pretalx && \
 	mkdir -p data && \
     chown -R pretalxuser:pretalxuser /pretalx /data data 
 
-# RUN python3 -m pretalx makemigrations
-# RUN python3 -m pretalx migrate && python3 -m pretalx rebuild
+
 
 USER pretalxuser
+
+RUN cd /pretalx/src && python3 -m pretalx makemigrations
+RUN cd /pretalx/src && python3 -m pretalx migrate && python3 -m pretalx rebuild
+
 VOLUME ["/etc/pretalx", "/data"]
 EXPOSE 80
 ENTRYPOINT ["pretalx"]
