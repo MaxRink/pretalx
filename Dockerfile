@@ -28,7 +28,7 @@ RUN apt-get update && \
 	/usr/sbin/update-locale LANG=C.UTF-8 && \
     mkdir /etc/pretalx && \
     mkdir /data && \
-    useradd -ms /bin/bash -d /pretalx -u 15371 pretalxuser && \
+    useradd -ms /bin/bash -d /pretalx -u 999 pretalxuser && \
     echo 'pretalxuser ALL=(ALL) NOPASSWD: /usr/bin/supervisord' >> /etc/sudoers && \
     mkdir /static
 
