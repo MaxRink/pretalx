@@ -5,6 +5,7 @@ RUN apt-get update && \
             nginx \
             supervisor \
             sudo \
+            locales \
             --no-install-recommends && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
@@ -31,7 +32,8 @@ RUN pip3 install -U pip setuptools wheel typing && \
     pip3 install gunicorn 
 
 
-
+RUN python3 -m pretalx makemigrations
+RUN python3 -m pretalx migrate && python3 -m pretalx rebuild
 
 RUN chmod +x /usr/local/bin/pretalx && \
     rm /etc/nginx/sites-enabled/default && \
