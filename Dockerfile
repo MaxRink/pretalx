@@ -64,8 +64,8 @@ RUN chmod +x /usr/local/bin/pretalx && \
 	mkdir -p data && \
     chown -R pretalxuser:pretalxuser /pretalx /data data 
 
-RUN python3 -m pretalx makemigrations
-RUN python3 -m pretalx migrate && python3 -m pretalx rebuild
+# RUN python3 -m pretalx makemigrations
+# RUN python3 -m pretalx migrate && python3 -m pretalx rebuild
 
 USER pretalxuser
 VOLUME ["/etc/pretalx", "/data"]
