@@ -42,10 +42,6 @@ RUN chmod +x /usr/local/bin/pretalx && \
 
 
 USER pretalxuser
-
-RUN cd /pretalx/src && python3 -m pretalx makemigrations
-RUN cd /pretalx/src && python3 -m pretalx migrate && python3 -m pretalx rebuild
-
 VOLUME ["/etc/pretalx", "/data"]
 EXPOSE 80
 ENTRYPOINT ["pretalx"]
