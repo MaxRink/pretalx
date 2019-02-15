@@ -40,8 +40,7 @@ COPY deployment/docker/pretalx.bash /usr/local/bin/pretalx
 COPY deployment/docker/supervisord.conf /etc/supervisord.conf
 COPY deployment/docker/nginx.conf /etc/nginx/nginx.conf
 
-RUN mkdir /static && \
-    pip3 install -U pip setuptools wheel typing && \
+RUN pip3 install -U pip setuptools wheel typing && \
     pip3 install -e /pretalx/src/ && \
     pip3 install django-redis pylibmc mysqlclient psycopg2 && \
     pip3 install gunicorn && \
