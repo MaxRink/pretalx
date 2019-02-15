@@ -1,6 +1,5 @@
 #!/bin/bash
 cd /pretalx/src
-export DJANGO_SETTINGS_MODULE=production_settings
 export DATA_DIR=/data/
 export HOME=/pretalx
 export NUM_WORKERS=$((2 * $(nproc --all)))
