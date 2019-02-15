@@ -1,6 +1,6 @@
 #!/bin/bash
 cd /pretalx/src
-export DATA_DIR=/data/
+export PRETALX_DATA_DIR=/data
 export HOME=/pretalx
 export NUM_WORKERS=$((2 * $(nproc --all)))
 
@@ -44,5 +44,4 @@ if [ "$1" == "upgrade" ]; then
     exec python3 -m pretalx updatestyles
 fi
 
-echo "Specify argument: all|cron|webworker|taskworker|shell|upgrade"
-exit 1
+exec python3 -m pretalx $*
