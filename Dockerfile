@@ -43,8 +43,7 @@ COPY deployment/docker/nginx.conf /etc/nginx/nginx.conf
 RUN pip3 install -U pip setuptools wheel typing && \
     pip3 install -e /pretalx/src/ && \
     pip3 install django-redis pylibmc mysqlclient psycopg2 && \
-    pip3 install gunicorn && \
-    chmod +x /usr/local/bin/pretalx
+    pip3 install gunicorn 
 
 
 
@@ -53,8 +52,7 @@ RUN chmod +x /usr/local/bin/pretalx && \
     rm /etc/nginx/sites-enabled/default && \
     cd /pretalx/src && \
     rm -f pretalx.cfg && \
-	mkdir -p data && \
-    chown -R pretalxuser:pretalxuser /pretalx /data data 
+    chown -R pretalxuser:pretalxuser /pretalx /data  
 
 
 
