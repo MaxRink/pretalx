@@ -35,25 +35,21 @@ RUN apt-get update && \
 
 ENV LC_ALL=C.UTF-8 \
     DJANGO_SETTINGS_MODULE=production_settings
+
 COPY src /pretalx/src
-
-RUN pip3 install -U \
-        pip \
-        setuptools \
-        wheel && \
-    cd /pretalx/src && \
-    pip3 install \
-        -r requirements.txt \
-        -r requirements/memcached.txt \
-        -r requirements/mysql.txt \
-        -r requirements/redis.txt \
-        gunicorn && \
-    rm -rf ~/.cache/pip
-
 COPY deployment/docker/pretalx.bash /usr/local/bin/pretalx
 COPY deployment/docker/supervisord.conf /etc/supervisord.conf
 COPY deployment/docker/nginx.conf /etc/nginx/nginx.conf
-COPY src /pretalx/src
+
+RUN mkdir /static && \
+    pip3 install -U pip setuptools wheel typing && \
+    pip3 install -e /pretalx/src/ && \
+    pip3 install django-redis pylibmc mysqlclient psycopg2 && \
+    pip3 install gunicorn && \
+    chmod +x /usr/local/bin/pretalx
+
+
+
 
 RUN chmod +x /usr/local/bin/pretalx && \
     rm /etc/nginx/sites-enabled/default && \
